@@ -13,9 +13,11 @@
     "ecmaVersion": "latest"
   },
   "rules": {
+    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }],
     "semi": ["error", "always"],
     "quotes": ["error", "double"],
     "no-console": 0,
-    "endOfLine": 0
+    "endOfLine": "auto"
+
   }
 }

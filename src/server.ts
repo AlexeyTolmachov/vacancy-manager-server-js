@@ -1,4 +1,4 @@
-const app = require("./app");
+import app from "./app";
 const mongoose = require("./dbMongo/mongoose/mongoose");
 
 const PORT = process.env.PORT || 5000;
