@@ -1,5 +1,5 @@
-const { Schema, model } = require("mongoose");
-const Joi = require("joi");
+import { Schema, model } from "mongoose";
+import Joi from "joi";
 
 const VacancySchema = new Schema({
   companyName: { type: String, required: true },
@@ -16,7 +16,7 @@ const VacancySchema = new Schema({
   timestamps: true
 });
 
-const joiCreateVacancy = Joi.object({
+export const joiCreateVacancy = Joi.object({
   companyName: Joi.string().min(3).max(30).required(),
   companyURL: Joi.string(), // validate for URL ?
   source: Joi.string().min(3).max(15),
@@ -28,7 +28,7 @@ const joiCreateVacancy = Joi.object({
   rank: Joi.number().min(1).max(5)
 });
 
-const joiUpdateVacancy = Joi.object({
+export const joiUpdateVacancy = Joi.object({
   id: Joi.string().required(),
   companyName: Joi.string().min(3).max(30),
   companyURL: Joi.string(), // validate for URL ?
@@ -41,5 +41,5 @@ const joiUpdateVacancy = Joi.object({
   rank: Joi.number().min(1).max(5)
 });
 
-const VacancyModel = model("Vacancies", VacancySchema);
-module.exports = { VacancyModel, joiCreateVacancy, joiUpdateVacancy };
+export const VacancyModel = model("Vacancies", VacancySchema);
+// module.exports = { VacancyModel, joiCreateVacancy, joiUpdateVacancy };

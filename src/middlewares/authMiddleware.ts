@@ -1,7 +1,10 @@
+import { Request, Response, NextFunction } from "express";
 const { Unauthorized } = require("http-errors");
 const UserModel = require("../dbMongo/models/UserModel");
-module.exports = async function (req, res, next) {
+
+export async function auth (req: Request, res: Response, next: NextFunction) {
     try {
+        //@ts-ignore
         const [bearer, userToken] = req.headers.authorization.split(" ");
         if (bearer !== "Bearer")
             throw new Unauthorized("Not authorized not find bearer");

@@ -1,4 +1,5 @@
-const validation = (schema) => (req, _, next) => {
+//@ts-ignore
+export const validation = (schema) => (req, _, next) => {
     const { error } = schema.validate(req.body);
     if (error) {
         error.status = 400;
@@ -7,5 +8,3 @@ const validation = (schema) => (req, _, next) => {
     }
     next();
 };
-
-module.exports = validation;

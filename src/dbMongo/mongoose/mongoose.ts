@@ -8,7 +8,7 @@ module.exports = mongoose
   .then(() => {
     console.log("mongodb run");
   })
-  .catch((err) => {
+  .catch((err: Error) => {
     console.log(err);
     process.exit(1);
   });

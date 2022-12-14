@@ -1,5 +1,5 @@
-const Joi = require("joi");
-const { Schema, model } = require("mongoose");
+import Joi from "joi";
+import { Schema, model } from "mongoose";
 
 const quickLinksSchema = new Schema({
     linkName: {type: String, required: [true, "link name is required"] },
@@ -9,18 +9,18 @@ const quickLinksSchema = new Schema({
     timestamps: true
 });
 
-const joiCreateQuickLink = Joi.object({
+export const joiCreateQuickLink = Joi.object({
     linkName: Joi.string().required(),
     link: Joi.string()
 });
 
-const joiUpdateQuickLink = Joi.object({
+export const joiUpdateQuickLink = Joi.object({
     id: Joi.string().required(),
     linkName: Joi.string(),
     link: Joi.string()
 });
 
 
-const QuickLinksModel = model("quickLinks", quickLinksSchema);
+export const QuickLinksModel = model("quickLinks", quickLinksSchema);
 
-module.exports = { QuickLinksModel, joiUpdateQuickLink, joiCreateQuickLink };
+// module.exports = { QuickLinksModel, joiUpdateQuickLink, joiCreateQuickLink };

@@ -2,10 +2,10 @@ import express, { Request, Response, NextFunction } from "express";
 import { IExpressErr } from './interfaces/interfaces';
 
 const cors = require("cors");
-const mainRouter = require("./routes/mainRouter");
-const vacancyRouter = require("./routes/vacancies");
-const authRouter = require("./routes/authRouter");
-const quickLinksRouter = require("./routes/quickLinks");
+import mainRouter from "./routes/mainRouter";
+import vacancyRouter from "./routes/vacancies";
+import authRouter from "./routes/authRouter";
+import quickLinksRouter from "./routes/quickLinks";
 
 const app = express();
 app.use(cors());

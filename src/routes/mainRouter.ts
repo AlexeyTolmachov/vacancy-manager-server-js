@@ -5,4 +5,4 @@ const swaggerDoc = require("../openapi-3.json");
 router.use("/api-docs", swaggerUI.serve);
 router.get("/api-docs", swaggerUI.setup(swaggerDoc));
 
-module.exports = router;
+export default router;

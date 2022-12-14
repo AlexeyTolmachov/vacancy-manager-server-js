@@ -1,9 +1,9 @@
-const Router = require("express");
-const { check } = require("express-validator");
+import Router from "express";
+import { check } from "express-validator";
+import controller from "../controller/userController";
+import { auth } from "../middlewares/authMiddleware";
 
-const router = new Router();
-const controller = require("../controller/userController");
-const auth = require("../middlewares/authMiddleware");
+const router = Router();
 
 router.post("/register", [
     check("username", "username is required").notEmpty(),
@@ -14,4 +14,4 @@ router.post("/login", controller.login);
 router.get("/logout", auth, controller.logout);
 router.get("/users", auth, controller.getUser);
 
-module.exports = router;
+export default router;
