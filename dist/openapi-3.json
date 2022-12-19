@@ -1,0 +1,338 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Vacancy Manager - OpenAPI 3.0",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Regiser, Login, Logout, Current user"
+    },
+    {
+      "name": "vacancy",
+      "description": "Access to a list of vacancies"
+    },
+    {
+      "name": "quick links",
+      "description": "Access to a copy-past quick links list"
+    },
+    {
+      "name": "cover letter",
+      "description": "Access to a cover letters list"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Create user",
+        "description": "Register a new User in system",
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "Created user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Login user into the system",
+        "description": "",
+        "operationId": "loginUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Logs out current logged in user session",
+        "description": "",
+        "operationId": "logoutUser",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/auth/current": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Return a data of a current Logged in User",
+        "description": "Creates list of users with given input array",
+        "operationId": "createUsersWithListInput",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/vacancy": {
+      "get": {
+        "tags": [
+          "vacancy"
+        ],
+        "summary": "Get a List of all vacancies",
+        "operationId": "getVacancy",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Vacancy"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "vacancy"
+        ],
+        "summary": "Create a new vacancy",
+        "description": "",
+        "operationId": "createVacancy",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Vacancy"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vacancy"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "companyName required"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "vacancy"
+        ],
+        "summary": "Update an existing vacancy",
+        "description": "Update an existing vacancy by Id",
+        "operationId": "updateVacancy",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Vacancy"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vacancy"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vacancy"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          }
+        }
+      }
+    },
+    "/vacancy/{vacancyId}": {
+      "delete": {
+        "tags": [
+          "vacancy"
+        ],
+        "summary": "Delete one vacancy",
+        "description": "Delete a vacancy by Id",
+        "operationId": "deleteVacancy",
+        "parameters": [
+          {
+            "name": "vacancyId",
+            "in": "path",
+            "description": "ID of vacancy to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Deleted Successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": null
+          }
+        }
+      },
+      "Vacancy": {
+        "required": [
+          "companyName"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "637fefdea4e472b40dec23e0"
+          },
+          "companyName": {
+            "type": "string",
+            "example": "incode"
+          },
+          "companyURL": {
+            "type": "string",
+            "example": "https://www.incode-group.com"
+          },
+          "source": {
+            "type": "string",
+            "example": "Dou.ua"
+          },
+          "sourceURL": {
+            "type": "string",
+            "example": "https://jobs.dou.ua/companies/incode/vacancies/206143/"
+          },
+          "position": {
+            "type": "string",
+            "example": "React Developer"
+          },
+          "salary": {
+            "type": "number",
+            "example": 700
+          },
+          "status": {
+            "type": "string",
+            "example": "not replyed"
+          },
+          "notes": {
+            "type": "string",
+            "example": "I'm still thinking .."
+          },
+          "rank": {
+            "type": "number",
+            "example": 2
+          }
+        }
+      }
+    }
+  }
+}
