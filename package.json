@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/server.ts",
+    "prod": "node ./dist/server.js",
     "lint": "eslint ./src",
     "fix": "eslint ./src --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
