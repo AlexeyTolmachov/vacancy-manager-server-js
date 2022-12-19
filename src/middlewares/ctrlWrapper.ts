@@ -4,6 +4,7 @@ export const ctrlWrapper = (ctrl: any) => async (req: Request, res: Response, ne
   try {
     await ctrl(req, res, next);
   } catch (error) {
+    // console.log("error in ctrl wrapper")
     next(error);
   }
 };

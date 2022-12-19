@@ -13,7 +13,7 @@ const jwt = require("jsonwebtoken");
 const httpErrors = require("http-errors");
 const { validationResult } = require("express-validator");
 const { secret } = require("../config/config");
-const UserModel = require("../dbMongo/models/UserModel");
+const { UserModel } = require("../dbMongo/models/UserModel");
 const generateAccessToken = (id) => {
     const payload = {
         id,

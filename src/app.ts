@@ -11,7 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", mainRouter);
+app.use("/", mainRouter);
 
 app.use("/auth", authRouter);
 app.use("/vacancy", vacancyRouter);

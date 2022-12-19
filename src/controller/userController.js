@@ -1,27 +1,22 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const httpErrors = require("http-errors");
+const {BadRequest, Unauthorized, NotFound, Conflict } = require("http-errors");
 const { validationResult } = require("express-validator");
 const { secret } = require("../config/config");
-const UserModel = require("../dbMongo/models/UserModel");
+const { UserModel } = require("../dbMongo/models/UserModel");
 
 const generateAccessToken = (id) => {
-  const payload = {
-    id,
-  };
-  return jwt.sign(payload, secret, { expiresIn: "24h" });
+  return jwt.sign({ id }, secret);
 };
 
 module.exports.registration = async (req, res) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    throw httpErrors(400, "ошибка при валидации");
-  }
+  if (!errors.isEmpty()) throw new BadRequest("ошибка при валидации");
+  
   const { username, password, email } = req.body;
+
   const candidate = await UserModel.findOne({ email });
-  if (candidate) {
-    throw httpErrors(400, "пользователь с таким именем уже существует");
-  }
+  if (candidate) throw new BadRequest("пользователь с таким именем уже существует");
 
   const hashPassword = bcrypt.hashSync(password, 7);
   const user = new UserModel({
@@ -36,14 +31,13 @@ module.exports.registration = async (req, res) => {
 
 module.exports.login = async (req, res) => {
   const { username, password, email } = req.body;
+
   const user = await UserModel.findOne({ email });
-  if (!user) {
-    throw httpErrors(400, `пользователь ${username} не найден `);
-  }
+  if (!user) throw new Conflict(`пользователь ${username} не найден `);
+  
   const validPassword = bcrypt.compareSync(password, user.password);
-  if (!validPassword) {
-    throw httpErrors(400, "введен не верный пароль");
-  }
+  if (!validPassword) throw new BadRequest("введен не верный пароль");
+  
   const token = generateAccessToken(user._id);
 
   user.userToken = token;
@@ -53,8 +47,12 @@ module.exports.login = async (req, res) => {
 };
 
 module.exports.logout = async (req, res) => {
-  const userToken = req.headers.authorization.split(" ");
-  const user = await UserModel.findOne({ userToken });
+  if (!req.headers.authorization) throw new Unauthorized("not authorized");
+  const [bearer, token] = req.headers.authorization.split(" ");
+
+  const user = await UserModel.findOne({ userToken: token });
+  if (!user) throw new NotFound("no such token in DB");
+
   user.userToken = null;
   await user.save();
   return res.json({ message: "User logOut" });
