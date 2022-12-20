@@ -69,7 +69,8 @@ module.exports.getUser = async (req, res) => {
 const { CLIENT_ID, CLIENT_SECRET, BASE_URL, FRONTEND_URL } = process.env;
 
 module.exports.googleAuth = async(_req, res) => {
-
+  console.log("googleAuth controller ...");
+  
   const stringifyedParams = queryString.stringify({
     client_id: CLIENT_ID,
     redirect_uri: `${BASE_URL}/auth/google-redirect`,

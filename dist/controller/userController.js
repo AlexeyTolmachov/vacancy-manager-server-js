@@ -15,7 +15,7 @@ const { validationResult } = require("express-validator");
 const { secret } = require("../config/config");
 const { UserModel } = require("../dbMongo/models/UserModel");
 // const queryString = async () =>  await import("query-string");
-const queryString = require('node:querystring');
+const queryString = require('querystring');
 const axios = require("axios");
 const generateAccessToken = (id) => {
     return jwt.sign({ id }, secret);
