@@ -1,6 +1,7 @@
+//@ts-nocheck
 import Router from "express";
 import { check } from "express-validator";
-import controller from "../controller/userController";
+import * as controller from "../controller/userController";
 import { auth } from "../middlewares/authMiddleware";
 import { ctrlWrapper } from "../middlewares/ctrlWrapper";
 
@@ -14,5 +15,8 @@ router.post("/register", [
 router.post("/login", ctrlWrapper(controller.login));
 router.get("/logout", auth, ctrlWrapper(controller.logout));
 router.get("/users", auth, ctrlWrapper(controller.getUser));
+
+router.get("/google", ctrlWrapper(controller.googleAuth));
+router.get("/google-redirect", ctrlWrapper(controller.googleRedirect));
 
 export default router;
