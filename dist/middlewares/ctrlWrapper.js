@@ -15,6 +15,7 @@ const ctrlWrapper = (ctrl) => (req, res, next) => __awaiter(void 0, void 0, void
         yield ctrl(req, res, next);
     }
     catch (error) {
+        // console.log("error in ctrl wrapper")
         next(error);
     }
 });

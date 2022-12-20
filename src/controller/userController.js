@@ -47,8 +47,7 @@ module.exports.login = async (req, res) => {
 };
 
 module.exports.logout = async (req, res) => {
-  if (!req.headers.authorization) throw new Unauthorized("not authorized");
-  const [bearer, token] = req.headers.authorization.split(" ");
+  const [_bearer, token] = req.headers.authorization.split(" ");
 
   const user = await UserModel.findOne({ userToken: token });
   if (!user) throw new NotFound("no such token in DB");

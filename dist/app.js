@@ -21,7 +21,7 @@ const quickLinks_1 = __importDefault(require("./routes/quickLinks"));
 const app = (0, express_1.default)();
 app.use(cors());
 app.use(express_1.default.json());
-app.get("/", mainRouter_1.default);
+app.use("/", mainRouter_1.default);
 app.use("/auth", authRouter_1.default);
 app.use("/vacancy", vacancies_1.default);
 app.use("/quickLinks", quickLinks_1.default);
