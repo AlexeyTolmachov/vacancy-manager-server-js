@@ -10,21 +10,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.auth = void 0;
-const { Unauthorized } = require("http-errors");
-const UserModel = require("../dbMongo/models/UserModel");
+const http_errors_1 = require("http-errors");
+const UserModel_1 = require("../dbMongo/models/UserModel");
 function auth(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             //@ts-ignore
+            if (!req.headers.authorization)
+                throw new http_errors_1.Unauthorized("No header");
             const [bearer, userToken] = req.headers.authorization.split(" ");
             if (bearer !== "Bearer")
-                throw new Unauthorized("Not authorized not find bearer");
+                throw new http_errors_1.Unauthorized("Not authorized not find bearer");
             if (!userToken)
-                throw new Unauthorized("Not authorized not find token");
-            const user = yield UserModel.findOne({ userToken });
-            if (!user) {
-                throw new Unauthorized("user not authorized ");
-            }
+                throw new http_errors_1.Unauthorized("Not authorized not find token");
+            const user = yield UserModel_1.UserModel.findOne({ userToken });
+            if (!user)
+                throw new http_errors_1.Unauthorized("user not authorized ");
             next();
         }
         catch (error) {
